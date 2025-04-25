@@ -1,0 +1,38 @@
+#!/bin/sh
+
+opts="-Dcom.sun.management.jmxremote.port=4957"
+prop="-Dcom.wanmei.au.HitEncoding=GBK"
+cp=../lib/jio.jar:../lib/application.jar:../lib/commons-collections-3.1.jar:../lib/commons-dbcp-1.2.1.jar:../lib/commons-pool-1.2.jar:../lib/commons-logging-1.0.4.jar:../lib/log4j-1.2.9.jar:$CLASSPATH:.
+
+start() {
+	loaddir=$1
+	echo $"Starting authd.eac: $loaddir"
+	while true; do
+		date >>/web/auth.out
+		date >>/web/auth.err
+		java $opts $prop -cp $cp authd /etc/table.xml "wanmeiseikong6969#" $loaddir >>/web/auth.out 2>>/web/auth.err
+		loaddir=""
+		sleep 10
+	done
+}
+
+stop() {
+	echo $"Stopping authd.eac: "
+	java jmxc controlRole "helloR&Dworld" 127.0.0.1:4957 /tmp
+	/usr/bin/killall -9 java authd.eac
+}
+
+case "$1" in
+  start)
+		start
+        ;;
+  loadstart)
+		start "/tmp"
+        ;;
+  stop) 
+		stop
+        ;;
+  *)    
+		echo $"Usage: $0 {start|stop|loadstart}"
+		exit 1
+esac

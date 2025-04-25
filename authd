@@ -1,0 +1,16 @@
+#!/bin/sh
+cd /root/authd/build
+
+export HOME=/usr/java/jdk1.6.0_12/
+export PATH=$HOME/bin:$PATH
+#export PATH=$PATH:$HOME/bin:/usr/java/jdk1.6.0_12/bin
+
+export CLASSPATH=.:/usr/java/jdk1.6.0_12/lib/dt.jar:/usr/java/jdk1.6.0_12/lib/tools.jar:/usr/java/jdk1.6.0_12/lib/mysql-connector-java-5.0.8-bin.jar
+
+export JAVA_HOME=/usr/java/jdk1.6.0_12/
+while true; do
+
+java -cp ../lib/jio.jar:../lib/application.jar:../lib/commons-collections-3.1.jar:../lib/commons-dbcp-1.2.1.jar:../lib/commons-pool-1.2.jar:../lib/commons-logging-1.0.4.jar:../lib/log4j-1.2.9.jar:.:$CLASSPATH authd table.xml
+sleep 10
+
+done
